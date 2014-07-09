@@ -1,7 +1,5 @@
 # phonegap-jquerym-js
 
-![image](repo.png)
-
 ### Description
 Take your ArcGIS API for JavaScript skills to the next level. Learn how to configure, build, and style hybrid, cross-platform mobile GIS applications that can access GPS, cameras, SD cards, and more. This session will cover implementation patterns using PhoneGap and JQuery.
 
