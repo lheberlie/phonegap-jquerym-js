@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!-- http://www.html5rocks.com/en/tutorials/appcache/beginner/ -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1:, user-scalable=no">
+    <!--
+    Apple-Specific Meta Tag Keys
+    https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html#//apple_ref/doc/uid/TP40008193-SW2
+    -->
+    <!-- // Safari iOS apps only -->
+    <!-- Sets whether a web application runs in full-screen mode -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Sets the style of the status bar for a web application -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- // Chrome for Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>Mobile Starter</title>
+
+    <link rel="stylesheet" href="./js/3.10compact/js/esri/css/esri.css"/>
+    <link rel="stylesheet" href="./styles/jquery.mobile-1.4.2.min.css">
+    <link rel="stylesheet" href="./styles/app.css">
+
+    <script src="./js/jquery-1.10.2.min.js"></script>
+    <script>
+        // --------------------------------------------------------------------
+        // Mobile intit must be called after jQuery but before jQuery Mobile
+        // --------------------------------------------------------------------
+        $(document).on("mobileinit", function () {
+            // Update configuration to our liking
+            console.log("jQuery Mobile has finished loading");
+        });
+    </script>
+    <script src="./js/jquery.mobile-1.4.2.min.js"></script>
+    <!-- Esri JavaScript library -->
+    <script>
+        var dojoConfig = {
+            baseUrl: "./js/3.10compact/js/dojo/dojo"
+        };
+    </script>
+    <script src="./js/3.10compact/init.js"></script>
+
+    <!-- Your application code -->
+    <script src="./js/app.js"></script>
+    <!-- Cordova library -->
+    <script type="text/javascript" src="cordova.js"></script>
+</head>
+<body>
+<!-- Main page -->
+<div data-role="page" id="ui-map-page" data-theme="a">
+
+    <!-- content -->
+    <div role="main" id="ui-map-content" data-theme="a">
+        <div id="ui-map"></div>
+        <div id="ui-dijit-geocoder"></div>
+        <div id="ui-dijit-locatebutton"></div>
+        <a id="ui-settingsbutton" href="#ui-settings-panel" class="SettingsButton ui-btn"></a>
+
+    </div>
+    <div data-role="panel" id="ui-settings-panel" data-theme="a" data-position="right" data-display="push"
+         data-position-fixed="true">
+        <ul data-role="listview">
+            <li class="basemapOption "><a class="ui-btn ui-btn-icon-custom" data-basemapname="topo">Topographic</a></li>
+            <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="streets">Streets</a></li>
+            <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="hybrid">Hybrid</a></li>
+            <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="gray">Gray</a></li>
+            <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="oceans">Oceans</a></li>
+            <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="national-geographic">National
+                Geographic</a></li>
+            <!-- <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="satellite">Satellite</a></li>
+             <li class="basemapOption"><a class="ui-btn ui-btn-icon-custom" data-basemapname="osm">Open StreetMap</a></li> -->
+        </ul>
+        <div class="ui-bar"></div>
+        <ul data-role="listview">
+            <li data-icon="false"><a href="#ui-about-page" class="ui-btn" data-role="button">About</a></li>
+            <li data-icon="false"><a href="#ui-feedback-page" class="ui-btn" data-role="button">Feedback</a></li>
+            <li data-icon="false"><a href="#" id="ui-home-button" class="ui-btn">Reset map</a></li>
+        </ul>
+    </div>
+</div>
+
+<!-- Settings page -->
+<div data-role="page" id="ui-about-page" data-theme="a">
+    <!-- content -->
+    <div role="main" class="ui-content" data-theme="a">
+        <h2>About this application</h2>
+
+        <div class="ui-body">
+            Maecenas faucibus mollis interdum.
+            Nulla vitae elit libero, a pharetra augue.
+            Vestibulum id ligula porta felis euismod semper.
+            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            Maecenas sed diam eget risus varius blandit sit amet non magna.
+        </div>
+        <a href="#ui-map-page" data-role="button" class="ui-btn">Close</a>
+    </div>
+</div>
+
+<!-- Feedback page -->
+<div data-role="page" id="ui-feedback-page" data-theme="a">
+    <!-- content -->
+    <div role="main" class="ui-content" data-theme="a">
+        <h2>Send Feedback about this application</h2>
+
+        <div class="ui-body">
+            Maecenas faucibus mollis interdum.
+            Nulla vitae elit libero, a pharetra augue.
+            Vestibulum id ligula porta felis euismod semper.
+            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+            Maecenas sed diam eget risus varius blandit sit amet non magna.
+        </div>
+        <a href="#ui-map-page" data-role="button" class="ui-btn">Close</a>
+    </div>
+</div>
+
+<script>
+    var app = {
+        // Application Constructor
+        initialize: function () {
+            this.bindEvents();
+        },
+        // Bind Event Listeners
+        //
+        // Bind any events that are required on startup. Common events are:
+        // 'load', 'deviceready', 'offline', and 'online'.
+        bindEvents: function () {
+            document.addEventListener('deviceready', this.onDeviceReady, false);
+        },
+        // deviceready Event Handler
+        //
+        // The scope of 'this' is the event. In order to call the 'receivedEvent'
+        // function, we must explicitly call 'app.receivedEvent(...);'
+        onDeviceReady: function () {
+            app.receivedEvent('deviceready');
+        },
+        // Update DOM on a Received Event
+        receivedEvent: function (id) {
+            console.log('Received Event: ' + id);
+
+            $(document).ready(function () {
+                console.log("jQuery document ready");
+
+                $(".ui-loader").show();
+                //                                                   initializeEsriJS();
+                applicationInitialize();
+
+            });
+            /*
+             $(document).ready(function () {
+             console.log("jQuery document ready");
+
+             $(document).bind("mobileinit", function () {
+             console.log("jQuery mobileinit");
+
+             $.mobile.pagecontainer({ defaults: true });
+
+             $.mobile.pagecontainer({
+             beforeload: function (event, ui) {
+             console.log("beforeload: ", event.type, ui.dataUrl);
+             },
+             load: function (event, ui) {
+             console.log("load: ", event.type, ui.dataUrl);
+             },
+             loadfailed: function (event, ui) {
+             console.log("loadfailed: ", event.type, ui.dataUrl);
+             },
+             create: function (event, ui) {
+             console.log("create: ", event.type, ui.dataUrl);
+             // ----------------------------------------------------
+             // Invoke function to initialize the code for the
+             // ArcGIS API for JavaScript
+             // ----------------------------------------------------
+             $(".ui-loader").show();
+             //                                                   initializeEsriJS();
+             applicationInitialize();
+             },
+             show: function (event, ui) {
+             console.log("show: ", event.type, ui.dataUrl);
+             },
+             hide: function (event, ui) {
+             console.log("hide: ", event.type, ui.dataUrl);
+             },
+             transition: function (event, ui) {
+             console.log("transition: ", event.type, ui.dataUrl);
+             },
+             beforetransition: function (event, ui) {
+             console.log("beforetransition: ", event.type, ui.dataUrl);
+             },
+             changefailed: function (event, ui) {
+             console.log("changefailed: ", event.type, ui.dataUrl);
+             }
+             });
+             });
+             });
+             */
+        }
+    };
+
+    app.initialize();
+</script>
+</body>
+</html>
+
