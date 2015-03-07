@@ -1,7 +1,8 @@
-# mobile-starter-template-cordova
+# {%= name %}
 
-A template for starting cordova projects with ArcGIS API for JavaScript.
+{%= description %}
 
+This project was derived from the [grunt-init-esrijs](https://github.com/lheberlie/grunt-init-esrijs) template.
 
 ## Features
 
@@ -26,6 +27,7 @@ This grunt project template will produce an optimized version of your website th
 
 * Using a terminal window, follow the steps below.
 * Install ```grunt-init-esrijs``` into your ```.grunt-init``` directory on your machine, see [Installing Grunt templates](http://gruntjs.com/project-scaffolding#installing-templates).
+	* ```git clone https://github.com/lheberlie/grunt-init-esrijs.git ~/.grunt-init/```
 * Create a new directory ```mkdir``` in your favorite project location
 	* Such as ```my-new-project```
 * Change directory ```cd``` to the new directory ```~/ProjectLocation/my-new-project```
@@ -124,9 +126,9 @@ We welcome [contributions](CONTRIBUTING.md) from anyone and everyone. Please see
 
 
 ## Licensing
-Copyright (c) 2014 Lloyd Heberlie  
+Copyright (c) {%= grunt.template.today('yyyy') %} {%= author_name %}  
 <!--
-Licensed under the Apache-2.0 license.
+Licensed under the {%= licenses.join(', ') %} license{%= licenses.length === 1 ? '' : 's' %}.
 -->
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

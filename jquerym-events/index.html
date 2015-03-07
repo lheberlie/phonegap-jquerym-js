@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Events</title>
+<!--
+Apple-Specific Meta Tag Keys
+https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html#//apple_ref/doc/uid/TP40008193-SW2
+-->
+<!-- Sets whether a web application runs in full-screen mode -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- Sets the style of the status bar for a web application -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Changes the logical window size used when displaying a page on iOS -->
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1 user-scalable=no">
+<!-- ----------------------------------------------------
+// jQuerym stylesheet
+// ---------------------------------------------------- -->
+<link rel="stylesheet" href="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css"/>
+<style>
+    #pageMain h1.ui-title {
+        color: #2B8604;
+    }
+
+    #pageSettings h1.ui-title {
+        color: #EC0206;
+    }
+
+    .ui-listview > .ui-li-static + .ui-main {
+        color: #2B8604;
+
+    }
+
+    .ui-listview > .ui-li-static + .ui-settings {
+        color: #EC0206;
+    }
+</style>
+<!-- ----------------------------------------------------
+// jQuery 2.x does not support IE 6, 7, or 8
+// ---------------------------------------------------- -->
+<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+<!-- ----------------------------------------------------
+// The order of jQuerym document's event execution
+// usually is:
+//
+// mobileinit
+// ready
+// load
+// ---------------------------------------------------- -->
+<script type="text/javascript">
+    // ----------------------------------------------------
+    // Custom initialization code
+    //
+    // Mobile init must be inbetween jQuery core and
+    // jQuery Mobile
+    //
+    // Every widget has an object constructor and default
+    // configuration that we can change inside the
+    // mobileinit that affects every widget instance on the
+    // page.
+    //
+    // jQuery Mobile attaches a new mobile object to the
+    // jQuery main object, $, also available as jQuery.
+    //
+    // Most of the work will be done using $.mobile or
+    // jQuery.mobile
+    // ----------------------------------------------------
+    $(document).bind("mobileinit", function () {
+        console.log("Do some custom setup before jQueryMobile loads");
+        // ----------------------------------------------------
+        // UI settings, defaults listed below
+        //
+        // $.mobile.activePageClass = "ui-page-active";
+        // $.mobile.activeBtnClass = "ui-btn-active";
+        //
+        // Page loading and dialog loading
+        //
+        // $.mobile.defaultPageTransition = "slide";
+        // $.mobile.defaultDialogTransition = "pop";
+        //
+        // Define a custom namespace if conflicting with
+        // another library
+        //
+        // $.mobile.ns = "heb";
+        //
+        // all data-* attributes become data-<namespace>-*
+        // e.g., data-heb-role="page"
+        // if you do this, you would have to manually change
+        // the CSS file to understand your new namespace.
+        //
+        // Disable ajax
+        // $.mobile.ajaxEnabled = false;
+        //
+        // Check http://mobilehtml5.org to verify compatibility
+        // of CORS inside mobile browsers
+        //
+        // Localize widget strings
+        //
+        // $.mobile.loadingMessage = "loading";
+        // $.mobile.loadingMessage = "cargando";
+        //
+        // Add an explicit back button to every header
+        //
+        // $.mobile.page.prototype.options.addBackBtn = true;
+        // $.mobile.page.prototype.options.backBtnText = "Previous";
+        //
+        // $.mobile.version - returns the current jQuery Mobile
+        // version
+        // ----------------------------------------------------
+    });
+</script>
+<script src="//code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript">
+    var listItemsArr = [];
+
+    function createConsoleLogMessage(pageID, eventType) {
+        return 'Page ("#' + pageID + ') "' + eventType + '" event';
+    }
+
+    function createListItem(pageID, eventName) {
+        if (pageID == 'pageMain') {
+            return '<li class="ui-li-static ui-body-inherit ui-main">"' + eventName + '" event</li>';
+        } else {
+            return '<li class="ui-li-static ui-body-inherit ui-settings">"' + eventName + '" event</li>';
+        }
+    }
+
+    $(window).on("orientationchange", function (event) {
+        $("#orientationMain").text("This device is in " + event.orientation + " mode!");
+    });
+
+    // -----------------------------------------------
+    //
+    //	Main page events
+    //
+    // -----------------------------------------------
+    $(document).on('pagebeforechange', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    /*
+     * pagebeforecreate ,  pagecreate  and  pageinit
+     * are used for page initialization, and they will
+     * trigger ONLY once, unless page is refreshed
+     */
+    $(document).on('pagebeforecreate', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    $(document).on('pagecreate', '#pageMain', function (e) {
+        // Good for dynamic content generation
+        // jQuery Mobile will style page content only after  pagecreate  is executed
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    $(document).on('pageinit', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    $(document).on('pagebeforehide', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    $(document).on('pagebeforeshow', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+        $('#mainListView').listview().listview('refresh');
+    });
+
+    $(document).on('pagehide', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    $(document).on('pageshow', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+    $(document).on('pagechange', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+        //$("ul li:first-child").addClass("ui-first-child");
+        //$("ul li:last-child").addClass("ui-last-child");
+
+    });
+
+    $(document).on('pageremove', '#pageMain', function (e) {
+        console.log(createConsoleLogMessage("pageMain", e.type));
+        $("div ul").append(createListItem("pageMain", e.type));
+    });
+
+
+    // -----------------------------------------------
+    //
+    //	Second page events
+    //
+    // -----------------------------------------------
+
+    $(document).on('pagebeforechange', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    /*
+     * pagebeforecreate ,  pagecreate  and  pageinit
+     * are used for page initialization, and they will
+     * trigger ONLY once, unless page is refreshed
+     */
+    $(document).on('pagebeforecreate', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pagecreate', '#pageSettings', function (e) {
+        // Good for dynamic content generation
+        // jQuery Mobile will style page content only after  pagecreate  is executed
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pageinit', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pagebeforehide', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pagebeforeshow', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pagehide', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pageshow', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+    $(document).on('pagechange', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+        //$("ul li:first-child").addClass("ui-first-child");
+        //$("ul li:last-child").addClass("ui-last-child");
+    });
+
+    $(document).on('pageremove', '#pageSettings', function (e) {
+        console.log(createConsoleLogMessage("pageSettings", e.type));
+        $("div ul").append(createListItem("pageSettings", e.type));
+    });
+
+</script>
+</head>
+<body>
+<div data-role="page" id="pageMain">
+    <div data-role="header" data-position="fixed">
+        <h1>Main</h1>
+        <a href="#pageSettings" data-icon="gear" class="ui-btn-right">Settings</a>
+    </div>
+    <div data-role="content" class="ui-content">
+        <ul id="mainListView" data-role="listview" data-inset="true"></ul>
+    </div>
+</div>
+<div data-role="page" id="pageSettings" data-position="fixed">
+    <div data-role="header" data-position="fixed">
+        <h1>Settings</h1>
+        <a href="#" data-rel="back" data-icon="back">Back</a>
+    </div>
+    <div data-role="content">
+        <ul id="settingsListView" data-role="listview" data-inset="true"></ul>
+    </div>
+</div>
+
+</body>
+</html>

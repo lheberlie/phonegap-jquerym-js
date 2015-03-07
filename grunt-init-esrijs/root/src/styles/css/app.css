@@ -1,0 +1,109 @@
+
+/*
+ *
+ * Your custom code goes here
+ *
+ *
+ */
+html, body, #mapPage, #map {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.esriSimpleSlider {
+    left: auto !important;
+    top: auto !important;
+    bottom: 3em !important;
+    right: 0.625em !important; /* 10 px */
+}
+
+.esriSimpleSlider div {
+    width: 56px !important;
+    height: 56px !important;
+    line-height: 55px !important;
+}
+
+.mobileBasemapGallery {
+    width: 58;
+    height: 58;
+    border: 1px solid #000000;
+    border-radius: 0.25em;
+}
+
+#mobileBasemapSwitcher {
+    position: absolute;
+    height: 58px;
+    width: 58px;
+    bottom: 11em;
+    right: 10px;
+}
+
+#mobileBasemapSwitcher div {
+    position: absolute;
+    z-index: 0;
+}
+
+#mobileBasemapSwitcher div.previous {
+    z-index: 1;
+}
+
+#mobileBasemapSwitcher div.current {
+    z-index: 2;
+}
+
+#search {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    top: 20px;
+    left: 5em;
+}
+
+.simpleGeocoder .esriGeocoder input {
+    outline: 0;
+    display: block;
+    border: 0;
+    border-collapse: collapse;
+    vertical-align: middle;
+    font-size: 12px;
+    line-height: 1.8em;
+    margin: 0;
+    padding: 6px 0;
+    float: left;
+    color: #444;
+    background: none;
+    margin: 0 6px;
+    width: 160px;
+}
+
+.simpleGeocoder .esriGeocoderIcon {
+    margin: 10px 6px 6px 6px;
+}
+
+#locate {
+    position: absolute;
+    z-index: 50;
+    bottom: 0.625em;
+    left: 0.625em !important; /* 10 px */
+}
+
+.LocateButton .zoomLocateButton {
+    width: 50px;
+    height: 50px;
+    background-color: #666;
+    background-color: rgba(255, 255, 255, 0.80);
+    border-radius: 5px;
+    border: 1px solid rgb(87, 88, 90);
+    background-image: url(images/locate-button-icon50x50.png);
+}
+
+.LocateButton .zoomLocateButton:active {
+    background-color: #FFF;
+    background-color: rgba(255, 255, 255, 0.60);
+}
+
+.LocateButton .zoomLocateButton:hover {
+    background-color: #ccc;
+    background-color: rgba(255, 255, 255, 0.90);
+}
